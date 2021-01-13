@@ -6,7 +6,7 @@ using System.Text;
 
 namespace BlogProject12.DataAccess.Repository
 {
-    class UnitOfWork : IUnitOfWork
+   public class UnitOfWork : IUnitOfWork
     {
         private readonly ApplicationDbContext _db;
 

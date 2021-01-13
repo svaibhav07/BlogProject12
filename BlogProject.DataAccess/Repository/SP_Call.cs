@@ -45,7 +45,7 @@ namespace BlogProject12.DataAccess.Repository
         }
 
         public Tuple<IEnumerable<T1>, IEnumerable<T2>> List<T1, T2>(string procedureName, DynamicParameters param = null)
-        {
+        {  
             using (SqlConnection sqlCon = new SqlConnection(ConnectionString))
             {
                 sqlCon.Open();

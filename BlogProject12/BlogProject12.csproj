@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Tag\Controllers\" />
+    <Folder Include="Areas\User\Views\" />
   </ItemGroup>
 
 </Project>

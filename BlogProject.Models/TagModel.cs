@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BlogProject12.Models
 {
-    class TagModel
+    public class TagModel
     {
         [Key]
         public int Id { get; set; }
