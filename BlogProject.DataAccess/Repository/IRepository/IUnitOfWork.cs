@@ -8,6 +8,6 @@ namespace BlogProject12.DataAccess.Repository.IRepository
     {
         IUserRepository User { get; }
         ISP_Call SP_Call { get; }
-
+        void Save();
     }
 }
