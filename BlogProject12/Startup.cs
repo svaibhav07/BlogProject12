@@ -46,6 +46,7 @@ namespace BlogProject12
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
+
             app.UseStaticFiles();
 
             app.UseRouting();

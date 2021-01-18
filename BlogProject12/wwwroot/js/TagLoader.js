@@ -10,20 +10,20 @@ function loadDataTable() {
     dataTable = $('#tblData').DataTable({
 
         "ajax": {
-            "url": "/Admin/User/GetAll"
+            "url": "/Admin/Tag/GetAll"
         },
         "columns": [
 
-            { "data": "userName", "width": "60%" },
+            { "data": "tagName", "width": "60%" },
             {
                 "data": "id",
                 "render": function (data) {
                     return `
                           <div class="text-center">
-                           <a onclick=Delete("/Admin/User/Delete/${data}")>Delete</a>
+                           <a onclick=Delete("/Admin/Tag/Delete/${data}")>Delete</a>
                            </div>
                           <div class="text-center">
-                          <a href="/Admin/User/Upsert/${data}">Edit</a>
+                          <a href="/Admin/Tag/Upsert/${data}">Edit</a>
                            </div>
                           
                            `;

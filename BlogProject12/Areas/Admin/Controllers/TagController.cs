@@ -10,12 +10,12 @@ using System.Threading.Tasks;
 namespace BlogProject12.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class UserController : Controller
+    public class TagController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
        
 
-        public UserController(IUnitOfWork unitOfWork)
+        public TagController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
@@ -40,43 +40,43 @@ namespace BlogProject12.Areas.Admin.Controllers
 
         public IActionResult Upsert(int? id)
         {
-            UserModel user = new UserModel();
+            TagModel tag = new TagModel();
             if (id == null)
             {
                 //create
-                return View(user);
+                return View(tag);
             }
 
-            user = _unitOfWork.User.Get(id.GetValueOrDefault());
+            tag = _unitOfWork.Tag.Get(id.GetValueOrDefault());
             
-            if (user == null)
+            if (tag == null)
             {
                 return NotFound();
             }
 
-            return View(user);
+            return View(tag);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Upsert(UserModel user)
+        public IActionResult Upsert(TagModel tag)
         {
             if (ModelState.IsValid)
             {
-                if (user.Id == 0)
+                if (tag.Id == 0)
                 {
-                    _unitOfWork.User.Add(user);
+                    _unitOfWork.Tag.Add(tag);
                     
                 }
                 else 
                 {
-                    _unitOfWork.User.Update(user);
+                    _unitOfWork.Tag.Update(tag);
                 }
                 _unitOfWork.Save();
                 return RedirectToAction(nameof(Index));
             }
 
-            return View(user);
+            return View(tag);
         }
 
 
@@ -89,19 +89,19 @@ namespace BlogProject12.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var allObj = _unitOfWork.User.GetAll();
+            var allObj = _unitOfWork.Tag.GetAll();
             return Json(new { data = allObj });
         }
 
         [HttpDelete]
         public IActionResult Delete(int id)
         {
-            var objFromDb = _unitOfWork.User.Get(id);
+            var objFromDb = _unitOfWork.Tag.Get(id);
             if (objFromDb == null)
             {
                 return Json(new { success = false, message = "Error while deleting" });
             }
-            _unitOfWork.User.Remove(objFromDb);
+            _unitOfWork.Tag.Remove(objFromDb);
             _unitOfWork.Save();
             return Json(new { success = true, message = "Delete Successful" });
         

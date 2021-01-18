@@ -9,10 +9,13 @@ namespace BlogProject12.Models
     {
         [Key]
         public int Id { get; set; }
+
+        [Display(Name = "Tag Name")]
         [Required]
         public string TagName { get; set; }
 
-        [Required]
-        public string RelatedBlogs { get; set; }
+        
+       // [Required]
+        //public string RelatedBlogs { get; set; }
     }
 }
