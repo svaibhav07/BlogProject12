@@ -24,6 +24,7 @@ namespace BlogProject12.DataAccess.Repository
             if(objFromDb!=null)
             {
                 objFromDb.UserName = user.FirstName;
+
                 _db.SaveChanges();
             
             }

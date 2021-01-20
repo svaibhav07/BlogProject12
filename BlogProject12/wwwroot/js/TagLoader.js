@@ -20,7 +20,7 @@ function loadDataTable() {
                 "render": function (data) {
                     return `
                           <div class="text-center">
-                           <a onclick=Delete("/Admin/Tag/Delete/${data}")>Delete</a>
+                          <a href="/Admin/User/Delete/${data}">Delete</a>
                            </div>
                           <div class="text-center">
                           <a href="/Admin/Tag/Upsert/${data}">Edit</a>
@@ -34,29 +34,3 @@ function loadDataTable() {
     });
 }
 
-function Delete(url) {
-    swal({
-        title: "Are you sure you want to Delete?",
-        text: "You will not be able to restore the data!",
-        icon: "warning",
-        buttons: true,
-        dangerMode: true
-    }).then((willDelete) => {
-        if (willDelete) {
-            $.ajax({
-                type: "DELETE",
-                url: url,
-                success: function (data) {
-                    if (data.success) {
-                        toastr.success(data.message);
-                        dataTable.ajax.reload();
-                    }
-                    else {
-                        toastr.error(data.message);
-                    }
-                }
-            });
-        }
-    });
-
-}

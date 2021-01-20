@@ -21,8 +21,4 @@
     <ProjectReference Include="..\BlogProject.Utilities\BlogProject12.Utilities.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Areas\User\Views\" />
-  </ItemGroup>
-
 </Project>

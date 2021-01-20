@@ -80,6 +80,18 @@ namespace BlogProject12.Areas.Admin.Controllers
         }
 
 
+        [HttpPost]
+        public IActionResult Delete(int id)
+        {
+            var objFromDb = _unitOfWork.User.Get(id);
+            _unitOfWork.User.Remove(id);
+            _unitOfWork.Save();
+            return RedirectToAction(nameof(Index));
+
+
+        }
+
+
 
 
 
@@ -93,7 +105,7 @@ namespace BlogProject12.Areas.Admin.Controllers
             return Json(new { data = allObj });
         }
 
-        [HttpDelete]
+       /* [HttpDelete]
         public IActionResult Delete(int id)
         {
             var objFromDb = _unitOfWork.User.Get(id);
@@ -106,7 +118,7 @@ namespace BlogProject12.Areas.Admin.Controllers
             return Json(new { success = true, message = "Delete Successful" });
         
         
-        }
+       }*/
 
 
 

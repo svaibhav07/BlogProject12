@@ -28,6 +28,10 @@ namespace BlogProject.Models
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
+        [Required]
+        [DataType(DataType.Password)]
+        public string PasswordConfirm { get; set; }
+
         [Display(Name = "Is Active")]
         [Range(typeof(bool), "true", "true", ErrorMessage = "The field Is Active must be checked.")]
         public bool IsActive { get; set; }
