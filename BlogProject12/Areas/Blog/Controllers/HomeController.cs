@@ -1,4 +1,5 @@
-﻿using BlogProject12.Models;
+﻿using BlogProject12.DataAccess.Repository.IRepository;
+using BlogProject12.Models;
 using BlogProject12.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -14,15 +15,39 @@ namespace BlogProject12.Areas.Blog.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IUnitOfWork unitOfWork)
         {
             _logger = logger;
+            _unitOfWork = unitOfWork;
         }
+        
+
+
+      
 
         public IActionResult Index()
         {
-            return View();
+      
+            IEnumerable<BlogModel> blogList = _unitOfWork.Blog.GetAll();
+
+
+            
+
+            return View(blogList);
+
+
+            
+        }
+        public IActionResult Detail(int? id)
+        {
+            BlogModel blogFromDb = new BlogModel();
+            blogFromDb = _unitOfWork.Blog.Get(id.GetValueOrDefault());
+
+            return View(blogFromDb);
+
+
         }
 
         public IActionResult Privacy()

@@ -16,12 +16,16 @@ namespace BlogProject12.DataAccess.Repository
             _db = db;
             User = new UserRepository(_db);
             Tag = new TagRepository(_db);
+            Blog = new BlogRepository(_db);
             SP_Call = new SP_Call(_db);
         }
         public IUserRepository User
         { get; private set; }
 
         public ITagRepository Tag
+        { get; private set; }
+
+        public IBlogRepository Blog
         { get; private set; }
 
         public ISP_Call SP_Call 

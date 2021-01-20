@@ -9,6 +9,7 @@ namespace BlogProject12.DataAccess.Repository.IRepository
         IUserRepository User { get; }
 
         ITagRepository Tag { get; }
+        IBlogRepository Blog { get; }
         ISP_Call SP_Call { get; }
         void Save();
     }
