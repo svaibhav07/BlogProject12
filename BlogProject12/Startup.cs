@@ -35,7 +35,7 @@ namespace BlogProject12
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             /*services.AddSession(options => {
-                options.IdleTimeout = TimeSpan.FromMinutes(60);*/
+                options.IdleTimeout = TimeSpan.FromMinutes(60)+;*/
 
 
 
