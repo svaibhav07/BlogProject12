@@ -80,11 +80,18 @@ namespace BlogProject12.Areas.Admin.Controllers
         }
 
 
-        [HttpPost]
-        public IActionResult Delete(int id)
+        [HttpGet]
+        //[ValidateAntiForgeryToken]
+        public IActionResult Delete(int? id)
         {
-            var objFromDb = _unitOfWork.User.Get(id);
-            _unitOfWork.User.Remove(id);
+            if (id == null)
+            {
+                return Content("Error while deletion..");
+            }
+            id = (int)id;
+            UserModel user = new UserModel();
+            var objFromDb = _unitOfWork.User.Get(id.GetValueOrDefault());
+            _unitOfWork.User.Remove(objFromDb);
             _unitOfWork.Save();
             return RedirectToAction(nameof(Index));
 

@@ -23,6 +23,10 @@ namespace BlogProject12.Models
         [ForeignKey("TagId")]
         public TagModel Tag { get; set; }
 
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime BlogPostDate { get; set; }
+
         [Required]
         public int UserId { get; set; }
 

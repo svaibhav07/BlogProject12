@@ -1,4 +1,5 @@
-﻿using BlogProject12.DataAccess.Repository.IRepository;
+﻿using BlogProject.Models;
+using BlogProject12.DataAccess.Repository.IRepository;
 using BlogProject12.Models;
 using BlogProject12.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -43,10 +44,11 @@ namespace BlogProject12.Areas.Blog.Controllers
         public IActionResult Detail(int? id)
         {
             BlogModel blogFromDb = new BlogModel();
+            UserModel user = new UserModel(); 
             blogFromDb = _unitOfWork.Blog.Get(id.GetValueOrDefault());
-
-            return View(blogFromDb);
-
+            int uid = blogFromDb.UserId;
+            user =  _unitOfWork.User.Get(id.GetValueOrDefault());
+            return View(Tuple.Create(blogFromDb, user));
 
         }
 

@@ -19,11 +19,12 @@ function loadDataTable() {
                 "data": "id",
                 "render": function (data) {
                     return `
-                          <div class="text-center">
-                           <a href="/Admin/User/Delete/${data}">Delete</a>
-                           </div>
+                        
                           <div class="text-center">
                           <a href="/Admin/User/Upsert/${data}">Edit</a>
+                           </div>
+                            <div class="text-center">
+                          <a href="/Admin/User/Delete/${data}">Delete</a>
                            </div>
                           
                            `;

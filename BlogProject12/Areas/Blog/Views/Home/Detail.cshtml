@@ -1,10 +1,35 @@
-﻿@model BlogProject12.Models.BlogModel
+﻿@model Tuple<BlogProject12.Models.BlogModel,BlogProject.Models.UserModel>
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-
+<style>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" >
+</style>
 
 <div class="row pb-3 backgroundWhite">
-    <h1>@Model.BlogTitle</h1>
-    <p>@Model.BlogRaw</p>
+    <div><h1>@Model.Item1.BlogTitle</h1></div>
 
+    <br><hr>
+    <div class="container">
+        <div class="row">
+            <p>@Model.Item1.BlogRaw</p>
+        </div>
+    </div>
+
+    <br><br><hr>
+    <p>@Model.Item1.Tag</p>
+    <br><br><hr />
+    <p>@Model.Item1.BlogPostDate</p>
+    <br><br><hr />
+
+    @if (Model.Item2 == null)
+    {
+        <p>Posted By-</p>
+        <p>No User found</p>
+    }
+    else
+    {
+        <p>Posted By-</p>
+        <p>@Model.Item2.UserName</p>
+
+    }
 </div>
 
