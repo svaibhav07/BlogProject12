@@ -2,6 +2,7 @@
 using BlogProject12.DataAccess.Repository.IRepository;
 using BlogProject12.Models;
 using BlogProject12.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -13,6 +14,7 @@ using System.Threading.Tasks;
 namespace BlogProject12.Areas.Blog.Controllers
 {
     [Area("Blog")]
+    //[Authorize(Roles = "admin")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -41,6 +43,34 @@ namespace BlogProject12.Areas.Blog.Controllers
 
             
         }
+
+        public IActionResult Create()
+        {
+            BlogModel blog = new BlogModel();
+
+            return View(blog);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(BlogModel blog)
+        {
+            /*BlogModel blog = new BlogModel();
+
+            blog.BlogTitle = BlogTitle;
+            blog.BlogRaw = BlogRaw;
+    
+            */
+            blog.TagId = 3;
+            blog.UserId = 1;
+            _unitOfWork.Blog.Add(blog);
+            _unitOfWork.Save();
+
+
+            return RedirectToAction(nameof(Index));
+        }
+
+       // [Authorize(Roles = "admin")]
         public IActionResult Detail(int? id)
         {
             BlogModel blogFromDb = new BlogModel();

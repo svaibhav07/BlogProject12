@@ -34,9 +34,5 @@ namespace BlogProject12.Models
         public UserModel User { get; set; }
 
 
-
-
-
-
     }
 }

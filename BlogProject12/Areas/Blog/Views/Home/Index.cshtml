@@ -5,16 +5,36 @@
 
 }
 
+<style>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" >
+</style>
+
 <div class="row pb-3 backgroundWhite">
+
+    <a asp-area="Blog" asp-controller="Home" asp-action="Create">Post Your Blog </a>
+
+
 
     @foreach (var blog in Model)
     {
         <div class="container">
             <div class="row">
-                
-                <a class="btn btn-primary" asp-action="Detail" asp-route-id ="@blog.Id"><h3>@blog.BlogTitle</h3></a>
-                
+
+                <a class="btn btn-primary" asp-action="Detail" asp-route-id="@blog.Id"><h3>@blog.BlogTitle</h3></a>
+
+                <div class="container">
+
+                    <div class="row">
+
+                        <br>
+                        <br>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
             </div>
-        </div>
     }
 </div>

@@ -1,6 +1,7 @@
 ﻿using BlogProject.Models;
 using BlogProject12.DataAccess.Repository.IRepository;
 using BlogProject12.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 namespace BlogProject12.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "User")]
     public class TagController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -38,6 +40,7 @@ namespace BlogProject12.Areas.Admin.Controllers
 
 
 
+      
         public IActionResult Upsert(int? id)
         {
             TagModel tag = new TagModel();
@@ -59,6 +62,7 @@ namespace BlogProject12.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        
         public IActionResult Upsert(TagModel tag)
         {
             if (ModelState.IsValid)

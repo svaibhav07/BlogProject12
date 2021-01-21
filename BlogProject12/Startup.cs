@@ -12,6 +12,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Session;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
 
 namespace BlogProject12
 {
@@ -27,9 +30,30 @@ namespace BlogProject12
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddControllersWithViews();
+            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            /*services.AddSession(options => {
+                options.IdleTimeout = TimeSpan.FromMinutes(60);*/
+
+
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
+            {
+                options.LoginPath = new PathString("/User/User/UserLogin");
+                options.AccessDeniedPath = new PathString("/User/User/UserSignUp");
+            });
+
+            IMvcBuilder builder = services.AddControllersWithViews();
+            // if (Env.IsDevelopment())
+            //{
+            builder.AddRazorRuntimeCompilation();
+            // }
+
+
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,6 +75,7 @@ namespace BlogProject12
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
