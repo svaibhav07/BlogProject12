@@ -33,6 +33,13 @@
                     </ul>
                     <a class="nav-link text-dark text-right" asp-area="User" asp-controller="User" asp-action="UserSignUp">SignUp</a>
                     <a class="nav-link text-dark text-right" asp-area="User" asp-controller="User" asp-action="UserLogin">Login</a>
+                    <a class="nav-link text-dark text-right" asp-area="User" asp-controller="User" asp-action="AdminSignUp">AdminSignUp</a>
+                    <a class="nav-link text-dark text-right" asp-area="User" asp-controller="User" asp-action="SuperUserSection">Admin Request List</a>
+                    User-
+                   @* @if(@User.FindFirst("UserName").Value!=null)
+                    {
+                        @User.FindFirst("UserName").Value;
+                    }*@
                 </div>
             </div>
         </nav>

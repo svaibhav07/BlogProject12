@@ -1,4 +1,5 @@
-﻿@model BlogProject12.Models.BlogModel
+﻿@*@model BlogProject12.Models.BlogModel*@
+@model Tuple<BlogProject12.Models.BlogModel, IEnumerable<BlogProject12.Models.TagModel>>
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @{
@@ -21,18 +22,34 @@
                     Blog Title
                 </div>
                 <div class="col-8">
-                    <input asp-for="BlogTitle" class="form-control" />
-                    <span asp-validation-for="BlogTitle" class="text-danger"></span>
+                    <input asp-for="@Model.Item1.BlogTitle" class="form-control" />
+                    <span asp-validation-for="@Model.Item1.BlogTitle" class="text-danger"></span>
                 </div>
                 <div><br></div>
                 <div class="col-4">
                     Blog Content
                 </div>
                 <div class="col-8">
-                    <input asp-for="BlogRaw" class="form-control" />
-                    <span asp-validation-for="BlogRaw" class="text-danger"></span>
+                    <input asp-for="@Model.Item1.BlogRaw" class="form-control" />
+                    <span asp-validation-for="@Model.Item1.BlogRaw" class="text-danger"></span>
                 </div>
-                
+                <div class="col-4">
+                    Select Tag
+                </div>
+                <div class="col-8">
+                    <select id="dropdowntag">
+                        <option TagId=0>Select Item</option>
+
+                        @{
+                            foreach (var item in Model.Item2)
+                            {
+                                <option TagId=@item.Id>@item.TagName</option>
+                            }
+                        }
+
+                    </select>
+                </div>
+
             </div>
             <div class="form-group row">
                 <div class="col-8 offset-4">

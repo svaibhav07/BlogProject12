@@ -32,13 +32,35 @@ namespace BlogProject.Models
         [DataType(DataType.Password)]
         public string PasswordConfirm { get; set; }
 
-        [Display(Name = "Is Active")]
-        [Range(typeof(bool), "true", "true", ErrorMessage = "The field Is Active must be checked.")]
-        public bool IsActive { get; set; }
+        /*  [Display(Name = "Is Active")]
+          [Range(typeof(bool), "true", "true", ErrorMessage = "The field Is Active must be checked.")]
+          public bool IsActive { get; set; }
 
-        [Display(Name = "Is Admin")]
-        [Range(typeof(bool), "true", "true", ErrorMessage = "The field Is Active must be checked.")]
-        public bool IsAdmin { get; set; }
+          [Display(Name = "Is Admin")]
+          [Range(typeof(bool), "true", "true", ErrorMessage = "The field Is Active must be checked.")]
+          public bool IsAdmin { get; set; }*/
+
+        [Display(Name = "Is Active")]
+
+        public int IsActive { get; set; } = 1;
+
+        [Display(Name = "Is Admin Request")]
+
+        public int IsAdminRequest { get; set; } = 0;
+
+        [Display(Name = "Is Admin Approved")]
+
+        public int IsAdminApproved { get; set; } = 0;
+
+        [Display(Name = "Is Admin Rejected")]
+
+        public int IsAdminRejected { get; set; } = 0;
+
+        [Display(Name = "Is SuperUser")]
+
+        public int IsSuperUser { get; set; } = 0;
+
+
 
 
     }

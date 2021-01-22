@@ -1,0 +1,43 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model IEnumerable<BlogProject.Models.UserModel>
+@{
+    ViewData["Title"] = "Home Page";
+
+}
+
+<style>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" >
+</style>
+
+<div class="row pb-3 backgroundWhite">
+
+    <h1>Admin Request List</h1>
+    <h2><hr></h2>
+
+
+
+    @foreach (var user in Model)
+    {
+        <div class="container">
+            <div class="row">
+                @if (user.IsAdminApproved == 0)
+                {
+                    <h3>@user.UserName</h3>
+                    <a class="btn btn-primary" asp-action="SuperUserAdminAprove" asp-route-id="@user.Id"><h3>Click Here To Approve This User as Admin</h3></a>
+                }
+                <div class="container">
+
+                    <div class="row">
+
+                        <br>
+                        <br>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    }
+</div>

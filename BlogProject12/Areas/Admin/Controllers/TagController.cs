@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace BlogProject12.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = "User")]
+    [Authorize(Roles = "Admin")]
     public class TagController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

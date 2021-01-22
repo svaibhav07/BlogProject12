@@ -1,5 +1,6 @@
 ﻿using BlogProject12.DataAccess.Repository.IRepository;
 using BlogProject12.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 namespace BlogProject12.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class BlogController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

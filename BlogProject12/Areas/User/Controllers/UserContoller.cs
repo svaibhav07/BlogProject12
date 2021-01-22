@@ -36,34 +36,38 @@ namespace BlogProject12.Areas.User.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult UserSignUp(UserModel user)
         {
-            //  UserModel user = new UserModel();
-            //if (ModelState.IsValid)
-            //{
-
             _unitOfWork.User.Add(user);
             _unitOfWork.Save();
 
             return RedirectToAction("Index", "Home", new { area = "Blog" });
-
-            //}
-
-            return View(user);
 
         }
 
         public IActionResult UserSignUp()
         {
             UserModel user = new UserModel();
-
-
-            // user = _unitOfWork.Tag.Get(id.GetValueOrDefault());
-
-
-
             return View(user);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult AdminSignUp(UserModel user)
+        {
+            
+            user.IsAdminRequest = 1;
 
+            _unitOfWork.User.Add(user);
+            _unitOfWork.Save();
+
+            return Content("Your request for admin role is sent to superuser. Please wait for the approval ");
+
+        }
+
+        public IActionResult AdminSignUp()
+        {
+            UserModel user = new UserModel();
+            return View(user);
+        }
 
         public IActionResult UserLogin()
         {
@@ -76,23 +80,42 @@ namespace BlogProject12.Areas.User.Controllers
         public IActionResult UserLogin(string UserName, string Password)
         {
             UserModel user = new UserModel();
-            string check = " ";
+            //string check = " ";
             user = _unitOfWork.User.GetFirstOrDefault(e => e.UserName == UserName);
-            //HttpContext.Session.SetString("product", "laptop");
 
             if (Password == user.Password)
             {
-                var identity = new ClaimsIdentity(new[] {
-                    new Claim("Id",user.Id.ToString()),
+                if (user.IsAdminApproved == 1)
+                {
+                    var identity = new ClaimsIdentity(new[] {
+                    new Claim("Id",user.Id.ToString()),                  
+                    new Claim("UserName", user.UserName),
+                    new Claim("FirstName", user.FirstName),
+                    new Claim("LastName", user.LastName),
                     new Claim("Email", user.Email),
                     new Claim(ClaimTypes.Role, "Admin"),
-                    new Claim("UserName", user.UserName),
                 }, CookieAuthenticationDefaults.AuthenticationScheme);
-                var principal = new ClaimsPrincipal(identity);
-                var login = HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+                    var principal = new ClaimsPrincipal(identity);
+                    var login = HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+                    return RedirectToAction("Index", "Home", new { area = "Blog" });
+
+                }
+                else
+                {
+                    var identity = new ClaimsIdentity(new[] {
+                    new Claim("Id",user.Id.ToString()),
+                    new Claim("UserName", user.UserName),
+                    new Claim("FirstName", user.FirstName),
+                    new Claim("LastName", user.LastName),
+                    new Claim("Email", user.Email),
+                    new Claim(ClaimTypes.Role, "User"),
+                }, CookieAuthenticationDefaults.AuthenticationScheme);
+                    var principal = new ClaimsPrincipal(identity);
+                    var login = HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
 
 
-                return RedirectToAction("Index", "Home", new { area = "Blog" });
+                    return RedirectToAction("Index", "Home", new { area = "Blog" });
+                }
 
             }
             else
@@ -102,32 +125,6 @@ namespace BlogProject12.Areas.User.Controllers
             }
 
             //return View();
-
-
-
-            /*Admin admin = await _unitWork.Admin.FindOneAsync(p => p.UserName == userName &&
-            p.Password == password);
-
-            if (admin != null)
-            {
-                var identity = new ClaimsIdentity(new[] {
-                     new Claim(UserClaimType.Id, admin.Id.ToString()),
-                     new Claim(UserClaimType.Email, admin.Email),
-                     new Claim(ClaimTypes.Role, RoleConst.Admin),
-                     new Claim(UserClaimType.FullName, admin.AdminName),
-                }, CookieAuthenticationDefaults.AuthenticationScheme);
-
-                var principal = new ClaimsPrincipal(identity);
-
-                var login = HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
-
-                return RedirectToAction("Index", "Home", new { area = "Administration" });
-            }
-            else
-            {
-                ViewData["Message"] = "Incorrect username or password";
-                return View("Index");
-            }*/
             
             }
 
@@ -138,8 +135,32 @@ namespace BlogProject12.Areas.User.Controllers
                 return View();
             }
 
+            public IActionResult AdminLogout()
+            {
+                return View();
+            }
 
 
-        }
+
+            public IActionResult SuperUserSection()
+            { 
+                IEnumerable<UserModel> UserList = _unitOfWork.User.GetAll();
+                return View(UserList);
+            }
+
+            public IActionResult SuperUserAdminAprove(int? id)
+            {
+                UserModel user = new UserModel();
+                user = _unitOfWork.User.Get(id.GetValueOrDefault());
+                user.IsAdminApproved = 1;
+                _unitOfWork.User.Update(user);
+                return Content("Approved");
+            }
+
+
+
+
+
+    }
     }
 

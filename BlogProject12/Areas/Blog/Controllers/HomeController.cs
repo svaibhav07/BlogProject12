@@ -10,11 +10,12 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Security.Claims;
 
 namespace BlogProject12.Areas.Blog.Controllers
 {
     [Area("Blog")]
-    //[Authorize(Roles = "admin")]
+    
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -34,9 +35,8 @@ namespace BlogProject12.Areas.Blog.Controllers
         {
       
             IEnumerable<BlogModel> blogList = _unitOfWork.Blog.GetAll();
-
-
             
+
 
             return View(blogList);
 
@@ -44,25 +44,28 @@ namespace BlogProject12.Areas.Blog.Controllers
             
         }
 
+
+        [Authorize(Roles = "User")]
         public IActionResult Create()
         {
             BlogModel blog = new BlogModel();
+            IEnumerable<TagModel> tagList = _unitOfWork.Tag.GetAll();
 
-            return View(blog);
+            return View(Tuple.Create(blog,tagList));
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(BlogModel blog)
+        [Authorize(Roles = "User")]
+        public IActionResult Create(string BlogTitle, string BlogRaw, string TagId)
         {
-            /*BlogModel blog = new BlogModel();
 
-            blog.BlogTitle = BlogTitle;
-            blog.BlogRaw = BlogRaw;
-    
-            */
-            blog.TagId = 3;
-            blog.UserId = 1;
+
+            BlogModel blog = new BlogModel();
+            int id=Convert.ToInt16(User.FindFirst("Id").Value);
+            int tagid = Convert.ToInt16(TagId);
+            blog.TagId = tagid;
+            blog.UserId = id;
             _unitOfWork.Blog.Add(blog);
             _unitOfWork.Save();
 
@@ -70,7 +73,8 @@ namespace BlogProject12.Areas.Blog.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-       // [Authorize(Roles = "admin")]
+
+        [Authorize(Roles = "User")]
         public IActionResult Detail(int? id)
         {
             BlogModel blogFromDb = new BlogModel();
