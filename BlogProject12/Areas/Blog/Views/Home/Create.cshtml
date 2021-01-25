@@ -22,7 +22,7 @@
                     Blog Title
                 </div>
                 <div class="col-8">
-                    <input asp-for="@Model.Item1.BlogTitle" class="form-control" />
+                    <input id="Blog_Title" name="Blog_Title"  asp-for="@Model.Item1.BlogTitle" class="form-control" />
                     <span asp-validation-for="@Model.Item1.BlogTitle" class="text-danger"></span>
                 </div>
                 <div><br></div>
@@ -30,20 +30,20 @@
                     Blog Content
                 </div>
                 <div class="col-8">
-                    <input asp-for="@Model.Item1.BlogRaw" class="form-control" />
+                    <input id="Blog_Content" name="Blog_Content" asp-for="@Model.Item1.BlogRaw" class="form-control" />
                     <span asp-validation-for="@Model.Item1.BlogRaw" class="text-danger"></span>
                 </div>
                 <div class="col-4">
                     Select Tag
                 </div>
                 <div class="col-8">
-                    <select id="dropdowntag">
-                        <option TagId=0>Select Item</option>
+                    <select id="dropdowntag" name="Blog_tag">
+                        <option TagId=0 name="Blog_tag">Select Item</option>
 
                         @{
                             foreach (var item in Model.Item2)
                             {
-                                <option TagId=@item.Id>@item.TagName</option>
+                                <option TagId=@item.Id name="Blog_tag">@item.TagName</option>
                             }
                         }
 

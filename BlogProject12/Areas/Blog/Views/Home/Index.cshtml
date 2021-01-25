@@ -1,5 +1,7 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
 @model IEnumerable<BlogProject12.Models.BlogModel>
+
 @{
     ViewData["Title"] = "Home Page";
 
@@ -9,11 +11,73 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" >
 </style>
 
+
+
+<header>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <div class="container-fluid">
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+
+                    </li>
+
+                    @if (User.FindFirst("IsAdmin").Value == "1")
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="Admin" asp-controller="User" asp-action="Index">User List</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="Admin" asp-controller="Tag" asp-action="Index">Tag List</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="Admin" asp-controller="Blog" asp-action="Index">Blog List</a>
+                        </li>
+
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+
+                            <a class="nav-link text-dark" asp-area="Blog" asp-controller="Home" asp-action="Create">Post Your Blog </a>
+
+                        </li>
+                    }
+
+                </ul>
+
+                @if (User.FindFirst("IsAdmin").Value == "1" || User.FindFirst("IsAdmin").Value == "0")
+                { 
+            <a class="nav-link text-dark text-right" asp-area="User" asp-controller="User" asp-action="Logout">Logout</a>
+                }
+                    @*  @if (true)
+            {
+                <a class="nav-link text-dark text-right" asp-area="User" asp-controller="User" asp-action="UserSignUp">SignUp</a>
+                <a class="nav-link text-dark text-right" asp-area="User" asp-controller="User" asp-action="UserLogin">Login</a>
+                <a class="nav-link text-dark text-right" asp-area="User" asp-controller="User" asp-action="AdminSignUp">AdminSignUp</a>
+
+            }
+            <a class="nav-link text-dark text-right" asp-area="User" asp-controller="User" asp-action="SuperUserSection">Admin Request List</a>
+            User-*@
+
+
+
+                </div>
+        </div>
+    </nav>
+</header>
+
+
+
+
 <div class="row pb-3 backgroundWhite">
 
-    <a asp-area="Blog" asp-controller="Home" asp-action="Create">Post Your Blog </a>
-
-
+    
 
     @foreach (var blog in Model)
     {
@@ -29,12 +93,14 @@
                         <br>
                         <br>
 
-                        </div>
-
                     </div>
 
                 </div>
 
             </div>
+
+        </div>
     }
+
 </div>
+

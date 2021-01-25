@@ -93,6 +93,7 @@ namespace BlogProject12.Areas.User.Controllers
                     new Claim("FirstName", user.FirstName),
                     new Claim("LastName", user.LastName),
                     new Claim("Email", user.Email),
+                    new Claim("IsAdmin",user.IsAdminApproved.ToString()),
                     new Claim(ClaimTypes.Role, "Admin"),
                 }, CookieAuthenticationDefaults.AuthenticationScheme);
                     var principal = new ClaimsPrincipal(identity);
@@ -108,6 +109,7 @@ namespace BlogProject12.Areas.User.Controllers
                     new Claim("FirstName", user.FirstName),
                     new Claim("LastName", user.LastName),
                     new Claim("Email", user.Email),
+                    new Claim("IsAdmin",user.IsAdminApproved.ToString()),
                     new Claim(ClaimTypes.Role, "User"),
                 }, CookieAuthenticationDefaults.AuthenticationScheme);
                     var principal = new ClaimsPrincipal(identity);
@@ -128,17 +130,16 @@ namespace BlogProject12.Areas.User.Controllers
             
             }
 
+      
 
 
-            public IActionResult UserLogout()
+        public async Task<IActionResult> Logout()
             {
-                return View();
-            }
+            await HttpContext.SignOutAsync();
+            return RedirectToAction("UserLogin", "User", new { area = "User" });
+        }
 
-            public IActionResult AdminLogout()
-            {
-                return View();
-            }
+           
 
 
 

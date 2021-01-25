@@ -33,15 +33,15 @@ namespace BlogProject12.Areas.Blog.Controllers
 
         public IActionResult Index()
         {
-      
+
+            //ViewBag.Message = "Anynomous";
+            //ViewBag.Message = "Admin";
+
             IEnumerable<BlogModel> blogList = _unitOfWork.Blog.GetAll();
-            
-
-
+           
             return View(blogList);
 
 
-            
         }
 
 
@@ -57,15 +57,23 @@ namespace BlogProject12.Areas.Blog.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "User")]
-        public IActionResult Create(string BlogTitle, string BlogRaw, string TagId)
+        public IActionResult Create(string Blog_Title, string Blog_Content, string Blog_Tag)
         {
 
 
             BlogModel blog = new BlogModel();
-            int id=Convert.ToInt16(User.FindFirst("Id").Value);
-            int tagid = Convert.ToInt16(TagId);
-            blog.TagId = tagid;
-            blog.UserId = id;
+            TagModel tag = new TagModel();
+            UserModel user = new UserModel();
+            blog.BlogPostDate = DateTime.Now;
+            //string check = " ";
+            tag = _unitOfWork.Tag.GetFirstOrDefault(e => e.TagName == Blog_Tag);
+            user = _unitOfWork.User.GetFirstOrDefault(e => e.UserName == User.FindFirst("UserName").Value);
+            //int id=Convert.ToInt16(User.FindFirst("Id").Value);
+           //int tagid = Convert.ToInt16(TagId);
+            blog.TagId = tag.Id;
+            blog.UserId = user.Id;
+            blog.BlogTitle = Blog_Title;
+            blog.BlogRaw = Blog_Content;
             _unitOfWork.Blog.Add(blog);
             _unitOfWork.Save();
 
@@ -81,7 +89,7 @@ namespace BlogProject12.Areas.Blog.Controllers
             UserModel user = new UserModel(); 
             blogFromDb = _unitOfWork.Blog.Get(id.GetValueOrDefault());
             int uid = blogFromDb.UserId;
-            user =  _unitOfWork.User.Get(id.GetValueOrDefault());
+            user = _unitOfWork.User.GetFirstOrDefault(e => e.UserName == User.FindFirst("UserName").Value);
             return View(Tuple.Create(blogFromDb, user));
 
         }

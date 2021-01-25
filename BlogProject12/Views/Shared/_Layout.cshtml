@@ -11,7 +11,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">BlogProject12</a>
+                <a class="navbar-brand" asp-area="Blog" asp-controller="Home" asp-action="Index">BlogProject12</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -19,27 +19,41 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" asp-area="Blog" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="Admin" asp-controller="User" asp-action="Index">User List</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="Admin" asp-controller="Tag" asp-action="Index">Tag List</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="Admin" asp-controller="Blog" asp-action="Index">Blog List</a>
-                        </li>
+
+                        @*@if (false)
+                        {
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="Admin" asp-controller="User" asp-action="Index">User List</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="Admin" asp-controller="Tag" asp-action="Index">Tag List</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="Admin" asp-controller="Blog" asp-action="Index">Blog List</a>
+                            </li>
+
+
+                        }*@
+
                     </ul>
-                    <a class="nav-link text-dark text-right" asp-area="User" asp-controller="User" asp-action="UserSignUp">SignUp</a>
-                    <a class="nav-link text-dark text-right" asp-area="User" asp-controller="User" asp-action="UserLogin">Login</a>
-                    <a class="nav-link text-dark text-right" asp-area="User" asp-controller="User" asp-action="AdminSignUp">AdminSignUp</a>
-                    <a class="nav-link text-dark text-right" asp-area="User" asp-controller="User" asp-action="SuperUserSection">Admin Request List</a>
-                    User-
-                   @* @if(@User.FindFirst("UserName").Value!=null)
+                   @* @if (fasle)
                     {
-                        @User.FindFirst("UserName").Value;
+                        <a class="nav-link text-dark text-right" asp-area="User" asp-controller="User" asp-action="UserSignUp">SignUp</a>
+                        <a class="nav-link text-dark text-right" asp-area="User" asp-controller="User" asp-action="UserLogin">Login</a>
+
+
                     }*@
+
+                    <a class="nav-link text-dark text-right" asp-area="User" asp-controller="User" asp-action="AdminSignUp">AdminSignUp</a>
+
+                  @*  @if (false)
+                    {
+                        <a class="nav-link text-dark text-right" asp-area="User" asp-controller="User" asp-action="SuperUserSection">Admin Request List</a>
+                    }*@
+
                 </div>
             </div>
         </nav>
@@ -59,7 +73,7 @@
     <script src="~/lib/jquery/dist/jquery.dataTables.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required:false)
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
 

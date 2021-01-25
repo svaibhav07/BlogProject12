@@ -82,7 +82,7 @@ namespace BlogProject12
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{area=Blog}/{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{area=User}/{controller=User}/{action=UserLogin}/{id?}");
             });
         }
     }
