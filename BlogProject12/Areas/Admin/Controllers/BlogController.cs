@@ -43,8 +43,8 @@ namespace BlogProject12.Areas.Admin.Controllers
             BlogModel blogFromDb = new BlogModel();
             UserModel user = new UserModel();
             blogFromDb = _unitOfWork.Blog.Get(id.GetValueOrDefault());
-            int uid = blogFromDb.UserId;
-            user = _unitOfWork.User.GetFirstOrDefault(e => e.UserName == User.FindFirst("UserName").Value);
+            id = blogFromDb.UserId;
+            user = _unitOfWork.User.Get(id.GetValueOrDefault());
             return View(Tuple.Create(blogFromDb, user));
 
         }
@@ -56,6 +56,7 @@ namespace BlogProject12.Areas.Admin.Controllers
             blog = _unitOfWork.Blog.Get(id.GetValueOrDefault());
             blog.IsApproved = 1;
             id = blog.UserId;
+           // var email = blog.User.Email;
             user = _unitOfWork.User.Get(id.GetValueOrDefault());
             _unitOfWork.Blog.Update(blog);
             _unitOfWork.Save();
