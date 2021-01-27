@@ -42,6 +42,24 @@
 
 
     }
-
+    @if (User.FindFirst("IsAdmin").Value == "1")
+    {
+        <div>
+            <br>
+            <a class="btn btn-primary" asp-area="Admin" asp-action="ChangeBlog" asp-route-id="@Model.Item1.Id"><h3>Request for Change</h3></a>
+            <br>
+        </div>
+        <div>
+            <br>
+            <a class="btn btn-primary" asp-area="Admin" asp-action="ApproveBlog" asp-route-id="@Model.Item1.Id"><h3>Approve this Blog</h3></a>
+            <br>
+        </div>
+        <div>
+            <br>
+            <a class="btn btn-primary" asp-area="Admin" asp-action="RejectBlog" asp-route-id="@Model.Item1.Id"><h3>Mark as Rejected Blog</h3></a>
+            <br>
+        </div>
+    }
 </div>
+
 

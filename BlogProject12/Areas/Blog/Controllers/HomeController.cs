@@ -14,6 +14,7 @@ using System.Security.Claims;
 
 namespace BlogProject12.Areas.Blog.Controllers
 {
+    [Authorize(Roles = "User")]
     [Area("Blog")]
     
     public class HomeController : Controller
@@ -45,7 +46,7 @@ namespace BlogProject12.Areas.Blog.Controllers
         }
 
 
-        [Authorize(Roles = "User")]
+       
         public IActionResult Create()
         {
             BlogModel blog = new BlogModel();
@@ -56,7 +57,7 @@ namespace BlogProject12.Areas.Blog.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "User")]
+        //[Authorize(Roles = "User")]
         public IActionResult Create(string Blog_Title, string Blog_Content, string Blog_Tag)
         {
 
@@ -74,6 +75,8 @@ namespace BlogProject12.Areas.Blog.Controllers
             blog.UserId = user.Id;
             blog.BlogTitle = Blog_Title;
             blog.BlogRaw = Blog_Content;
+            blog.User = user;
+           // _unitOfWork.User.Add(user);
             _unitOfWork.Blog.Add(blog);
             _unitOfWork.Save();
 
@@ -82,7 +85,7 @@ namespace BlogProject12.Areas.Blog.Controllers
         }
 
 
-        [Authorize(Roles = "User")]
+       // [Authorize(Roles = "User")]
         public IActionResult Detail(int? id)
         {
             BlogModel blogFromDb = new BlogModel();

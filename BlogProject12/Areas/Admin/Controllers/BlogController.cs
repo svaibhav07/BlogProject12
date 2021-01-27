@@ -1,5 +1,8 @@
-﻿using BlogProject12.DataAccess.Repository.IRepository;
+﻿using BlogProject.Models;
+using BlogProject12.DataAccess.Repository.IRepository;
 using BlogProject12.Models;
+using BlogProject12.Utilities;
+//using BlogProject12.Utilities.EmailConfig;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -29,11 +32,63 @@ namespace BlogProject12.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
+            IEnumerable<BlogModel> blogList = _unitOfWork.Blog.GetAll();
 
+            return View(blogList);
 
-            return View();
         }
 
+        public IActionResult Detail(int? id)
+        {
+            BlogModel blogFromDb = new BlogModel();
+            UserModel user = new UserModel();
+            blogFromDb = _unitOfWork.Blog.Get(id.GetValueOrDefault());
+            int uid = blogFromDb.UserId;
+            user = _unitOfWork.User.GetFirstOrDefault(e => e.UserName == User.FindFirst("UserName").Value);
+            return View(Tuple.Create(blogFromDb, user));
+
+        }
+
+        public IActionResult ApproveBlog(int? id)
+        {
+            BlogModel blog = new BlogModel();
+            UserModel user = new UserModel();
+            blog = _unitOfWork.Blog.Get(id.GetValueOrDefault());
+            blog.IsApproved = 1;
+            id = blog.UserId;
+            user = _unitOfWork.User.Get(id.GetValueOrDefault());
+            _unitOfWork.Blog.Update(blog);
+            _unitOfWork.Save();
+            string rec = user.Email;
+            EmailConfig.SendMail(rec, "BlogWorld", "Your Blog is Approved");
+            return Content("Approved");
+        }
+
+        public IActionResult RejectBlog(int? id)
+        {
+            BlogModel blog = new BlogModel();
+            blog = _unitOfWork.Blog.Get(id.GetValueOrDefault());
+            blog.IsRejected = 1;
+            _unitOfWork.Blog.Update(blog);
+            _unitOfWork.Save();
+            string rec = blog.User.Email;
+            EmailConfig.SendMail(rec, "BlogWorld", "Your Blog is Rejected");
+
+            return Content("Rejected");
+        }
+
+        public IActionResult ChangeBlog(int? id)
+        {
+
+            BlogModel blog = new BlogModel();
+            blog = _unitOfWork.Blog.Get(id.GetValueOrDefault());
+            blog.ChangeRequested = 1;
+            _unitOfWork.Blog.Update(blog);
+            _unitOfWork.Save();
+            return Content("Change request is sent ");
+            string rec = blog.User.Email;
+            EmailConfig.SendMail(rec, "BlogWorld", "Your Blog require some changes");
+        }
 
 
 

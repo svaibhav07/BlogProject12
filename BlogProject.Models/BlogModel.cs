@@ -33,6 +33,18 @@ namespace BlogProject12.Models
         [ForeignKey("UserId")]
         public UserModel User { get; set; }
 
+        [Required]
+        public int IsRequested { get; set; } = 1;
+
+        [Required]
+        public int IsApproved { get; set; } = 0;
+
+        [Required]
+        public int IsRejected { get; set; } = 0;
+
+        [Required]
+        public int ChangeRequested { get; set; } = 0;
+
 
     }
 }

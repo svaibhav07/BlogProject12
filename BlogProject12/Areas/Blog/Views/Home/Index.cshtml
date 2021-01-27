@@ -77,30 +77,80 @@
 
 <div class="row pb-3 backgroundWhite">
 
-    
 
-    @foreach (var blog in Model)
+    @if (User.FindFirst("IsAdmin").Value == "0")
     {
-        <div class="container">
-            <div class="row">
 
-                <a class="btn btn-primary" asp-action="Detail" asp-route-id="@blog.Id"><h3>@blog.BlogTitle</h3></a>
 
+        @foreach (var blog in Model)
+        {
+            @if (blog.IsApproved == 1)
+            {
                 <div class="container">
-
                     <div class="row">
 
-                        <br>
-                        <br>
+                        <a class="btn btn-primary" asp-action="Detail" asp-route-id="@blog.Id"><h3>@blog.BlogTitle</h3></a>
+
+                        <div class="container">
+
+                            <div class="row">
+
+                                <br>
+                                <br>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            }
+            }
+        }
+
+
+</div>
+
+
+<div class="row pb-3 backgroundWhite">
+
+
+    @if (User.FindFirst("IsAdmin").Value == "1")
+    {
+       
+    <div><br> Blog Request List<hr><br></div>
+
+        @foreach (var blog in Model)
+        {
+            @if (blog.IsRequested == 1 && blog.IsApproved == 0 && blog.IsRejected == 0)
+            {
+            <div class="container">
+                <div class="row">
+
+                    <a class="btn btn-primary" asp-action="Detail" asp-route-id="@blog.Id"><h3>@blog.BlogTitle</h3></a>
+
+                    <div class="container">
+
+                        <div class="row">
+
+                            <br>
+                            <br>
+
+                        </div>
 
                     </div>
 
                 </div>
 
             </div>
+                }
+            }
 
-        </div>
     }
 
+
 </div>
+
+
 

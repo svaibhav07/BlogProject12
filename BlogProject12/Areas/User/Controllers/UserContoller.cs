@@ -98,7 +98,7 @@ namespace BlogProject12.Areas.User.Controllers
                 }, CookieAuthenticationDefaults.AuthenticationScheme);
                     var principal = new ClaimsPrincipal(identity);
                     var login = HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
-                    return RedirectToAction("Index", "Home", new { area = "Blog" });
+                    return RedirectToAction("Index", "Blog", new { area = "Admin" });
 
                 }
                 else
