@@ -60,19 +60,22 @@ namespace BlogProject12.Areas.Admin.Controllers
             _unitOfWork.Blog.Update(blog);
             _unitOfWork.Save();
             string rec = user.Email;
-            EmailConfig.SendMail(rec, "BlogWorld", "Your Blog is Approved");
+            EmailConfig.SendMail(rec, "BlogWorld-Blog Approved!!", "Your Blog is Approved");
             return Content("Approved");
         }
 
         public IActionResult RejectBlog(int? id)
         {
             BlogModel blog = new BlogModel();
+            UserModel user = new UserModel();
             blog = _unitOfWork.Blog.Get(id.GetValueOrDefault());
             blog.IsRejected = 1;
+            id = blog.UserId;
+            user = _unitOfWork.User.Get(id.GetValueOrDefault());
             _unitOfWork.Blog.Update(blog);
             _unitOfWork.Save();
-            string rec = blog.User.Email;
-            EmailConfig.SendMail(rec, "BlogWorld", "Your Blog is Rejected");
+            string rec = user.Email;
+            EmailConfig.SendMail(rec, "BlogWorld-Blog Rejected !!", "Your Blog is Rejected");
 
             return Content("Rejected");
         }
@@ -81,13 +84,17 @@ namespace BlogProject12.Areas.Admin.Controllers
         {
 
             BlogModel blog = new BlogModel();
+            UserModel user = new UserModel();
             blog = _unitOfWork.Blog.Get(id.GetValueOrDefault());
             blog.ChangeRequested = 1;
+            id = blog.UserId;
+            user = _unitOfWork.User.Get(id.GetValueOrDefault());
             _unitOfWork.Blog.Update(blog);
             _unitOfWork.Save();
-            return Content("Change request is sent ");
-            string rec = blog.User.Email;
-            EmailConfig.SendMail(rec, "BlogWorld", "Your Blog require some changes");
+            string rec = user.Email;
+            //string rec = blog.User.Email;
+            EmailConfig.SendMail(rec, "BlogWorld- Change Required", "Your Blog require some changes");
+            return Content("Request of change sent to user");
         }
 
 
