@@ -53,7 +53,7 @@ namespace BlogProject12.Utilities
                 smtp.Host = "smtp.gmail.com"; //for gmail host  
                 smtp.EnableSsl = true;
                 smtp.UseDefaultCredentials = false;
-                smtp.Credentials = new NetworkCredential("blogworldproject18@gmail.com", "Password");
+                smtp.Credentials = new NetworkCredential("blogworldproject18@gmail.com", "Vaibhav@18");
                 smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
                 smtp.Send(message);
             }

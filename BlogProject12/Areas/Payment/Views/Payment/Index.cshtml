@@ -1,0 +1,43 @@
+﻿@using Microsoft.Extensions.Options
+@inject IOptions<BlogProject12.Utilities.StripeSettings> Stripe
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<h1>Make a payment</h1>
+
+<form method="post">
+    
+
+    <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+            data-key ="@Stripe.Value.PublishKey"
+            data-amount="1000"
+            data-name ="Blog Project"
+            data-label="Place Order"
+            data-description="blog blog"
+            data-locate="auto"
+            data-allow-remember-me="false"
+            data-image="https://stripe.com/img/documentation/checkout/marketplace.png">
+
+    </script>
+
+    <script>
+        document.getElementsByClassName("stripe-button-el")[0].style.display = 'none';
+    </script>
+
+
+
+   <button type="submit" value="Place order" class="btn btn-success form-control">Pay button</button>
+               
+</form>
+
+@section Scripts{
+
+    <partial name="_ValidationScriptsPartial" />
+}

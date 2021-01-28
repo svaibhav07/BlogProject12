@@ -24,12 +24,6 @@ namespace BlogProject12.Areas.Admin.Controllers
             _unitOfWork = unitOfWork;
         }
 
-
-
-
-
-
-
         public IActionResult Index()
         {
             IEnumerable<BlogModel> blogList = _unitOfWork.Blog.GetAll();
@@ -86,6 +80,7 @@ namespace BlogProject12.Areas.Admin.Controllers
 
             BlogModel blog = new BlogModel();
             UserModel user = new UserModel();
+            int blogid = (int)id;
             blog = _unitOfWork.Blog.Get(id.GetValueOrDefault());
             blog.ChangeRequested = 1;
             id = blog.UserId;
@@ -94,13 +89,29 @@ namespace BlogProject12.Areas.Admin.Controllers
             _unitOfWork.Save();
             string rec = user.Email;
             //string rec = blog.User.Email;
-            EmailConfig.SendMail(rec, "BlogWorld- Change Required", "Your Blog require some changes");
-            return Content("Request of change sent to user");
+           // EmailConfig.SendMail(rec, "BlogWorld- Change Required", "Your Blog require some changes");
+            return View(blog);
+
         }
 
+        [HttpPost]
+        public IActionResult ChangeBlog(string change_message,int? id)
+        {
 
+            BlogModel blog = new BlogModel();
+            UserModel user = new UserModel();
+            blog = _unitOfWork.Blog.Get(id.GetValueOrDefault());
+            blog.ChangeRequested = 1;
+            id = blog.UserId;
+            user = _unitOfWork.User.Get(id.GetValueOrDefault());
+            _unitOfWork.Blog.Update(blog);
+            _unitOfWork.Save();
+            //string rec = user.Email;
+            string rec = blog.User.Email;
+            EmailConfig.SendMail(rec, "BlogWorld- Change Required", "Your Blog require some changes");
+            return RedirectToAction(nameof(Index));
 
-
+        }
 
         public IActionResult Upsert(int? id)
         {
@@ -142,11 +153,6 @@ namespace BlogProject12.Areas.Admin.Controllers
 
             return View(blog);
         }
-
-
-
-
-
 
 
         #region API CALLS

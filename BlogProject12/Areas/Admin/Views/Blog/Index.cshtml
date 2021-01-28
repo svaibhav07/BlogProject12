@@ -109,7 +109,7 @@
 
         @foreach (var blog in Model)
         {
-            @if (blog.IsRequested == 1 && blog.IsApproved == 0 && blog.IsRejected == 0)
+            @if (blog.IsRequested == 1 && blog.IsApproved == 0 && blog.IsRejected == 0 && blog.ChangeRequested==0)
             {
                 <div class="container">
                     <div class="row">

@@ -43,6 +43,11 @@ namespace BlogProject12.DataAccess.Repository
                 _db.SaveChanges();
 
             }
+
+            if (blog.User != null && blog.Tag != null)
+            {
+                _db.SaveChanges();
+            }
         }
     }
 }

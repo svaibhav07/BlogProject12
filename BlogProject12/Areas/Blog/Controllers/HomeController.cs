@@ -77,11 +77,13 @@ namespace BlogProject12.Areas.Blog.Controllers
             blog.BlogRaw = Blog_Content;
             blog.User = user;
            // _unitOfWork.User.Add(user);
-            _unitOfWork.Blog.Add(blog);
+            //_unitOfWork.Save();
+           // _unitOfWork.User.Add(user);
+            _unitOfWork.Blog.Add(blog);           
             _unitOfWork.Save();
-
-
-            return RedirectToAction(nameof(Index));
+            _unitOfWork.Blog.Update(blog);
+            _unitOfWork.Save();
+           return RedirectToAction(nameof(Index));
         }
 
 
@@ -92,6 +94,7 @@ namespace BlogProject12.Areas.Blog.Controllers
             UserModel user = new UserModel(); 
             blogFromDb = _unitOfWork.Blog.Get(id.GetValueOrDefault());
             int uid = blogFromDb.UserId;
+            //var tag = blogFromDb.Tag.TagName;
             user = _unitOfWork.User.GetFirstOrDefault(e => e.UserName == User.FindFirst("UserName").Value);
             return View(Tuple.Create(blogFromDb, user));
 

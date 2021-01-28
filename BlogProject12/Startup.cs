@@ -15,6 +15,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Session;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
+using BlogProject12.Utilities;
+using Stripe;
 
 namespace BlogProject12
 {
@@ -33,6 +35,7 @@ namespace BlogProject12
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
 
             /*services.AddSession(options => {
                 options.IdleTimeout = TimeSpan.FromMinutes(60)+;*/
@@ -74,6 +77,8 @@ namespace BlogProject12
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            StripeConfiguration.ApiKey = Configuration.GetSection("Stripe")["SecretKey"];
 
             app.UseAuthentication();
             app.UseAuthorization();
