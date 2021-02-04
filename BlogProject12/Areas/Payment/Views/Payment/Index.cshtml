@@ -13,12 +13,12 @@
 <h1>Make a payment</h1>
 
 <form method="post">
-    
+
 
     <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-            data-key ="@Stripe.Value.PublishKey"
+            data-key="@Stripe.Value.PublishKey"
             data-amount="1000"
-            data-name ="Blog Project"
+            data-name="Blog Project"
             data-label="Place Order"
             data-description="blog blog"
             data-locate="auto"
@@ -33,9 +33,13 @@
 
 
 
-   <button type="submit" value="Place order" class="btn btn-success form-control">Pay button</button>
-               
+    <button type="submit" value="Place order" class="btn btn-success form-control">Pay button</button>
+
 </form>
+
+<a class="btn btn-success form-control" asp-action="RazorpayPayment">Razorpay</a>
+
+asp-action="RazorpayPayment"
 
 @section Scripts{
 

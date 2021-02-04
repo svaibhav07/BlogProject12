@@ -78,6 +78,8 @@ namespace BlogProject12
 
             app.UseRouting();
 
+            
+
             StripeConfiguration.ApiKey = Configuration.GetSection("Stripe")["SecretKey"];
 
             app.UseAuthentication();
