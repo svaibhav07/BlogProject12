@@ -10,10 +10,15 @@ using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
+using BlogProject12.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.Facebook;
+using Newtonsoft.Json.Linq;
 
 namespace BlogProject12.Areas.User.Controllers
 {
     [Area("User")]
+    [Authorize]
     public class UserController : Controller
     {
 
@@ -69,11 +74,72 @@ namespace BlogProject12.Areas.User.Controllers
             return View(user);
         }
 
-        public IActionResult UserLogin()
+
+        [AllowAnonymous]
+        public IActionResult UserLogin(string returnUrl)
         {
+
+            LoginViewModel model = new LoginViewModel();
+            model.ReturnUrl = returnUrl;
+          //  model.ExternalLogins = (await signInManager ).ToList();
+            
+          
+            
             return View();
         }
 
+        [Route("facebook-login")]
+        [AllowAnonymous]
+        public IActionResult FacebookLogin()
+        {
+            var properties = new AuthenticationProperties
+            {
+                RedirectUri = Url.Action("FacebookResponse")
+
+            };
+
+            return Challenge(properties, FacebookDefaults.AuthenticationScheme);
+        
+        }
+
+        [Route("facebook-response")]
+        public async Task<IActionResult> FacebookResponse()
+        {
+            var results = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+
+             var claims = results.Principal.Identities.FirstOrDefault().Claims.Select(claim => new
+             {
+
+                 claim.Issuer,
+                 claim.OriginalIssuer,
+                 claim.Type,
+                 claim.Value
+
+             });
+            //var array = JArray.Parse(claims.FirstOrDefault(s=>s.Value== claims.ToArray));
+
+            var array = claims.Select(s => s.Value);
+
+                    /* array details-:
+                     * arr[0]= "Unique ID for User given by facebook" 
+                     * arr[1]="Email ID of User"
+                     * arr[2]="Full Name"
+                     * arr[3]= "First Name"
+                     * arr[4]="Last Name"
+                     */
+            string s="a";
+            //return Content(claims.Select(x=>x.Value));
+        
+            
+            foreach (var x in array)
+            {
+                s= x;
+            }
+            //return Content(s);
+           
+             return Json(claims);
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]

@@ -33,15 +33,25 @@
 
 
 
-    <button type="submit" value="Place order" class="btn btn-success form-control">Pay button</button>
+    <button type="submit" value="Place order" class="btn btn-success form-control">Pay With Stripe</button>
 
 </form>
 
-<a class="btn btn-success form-control" asp-action="RazorpayPayment">Razorpay</a>
+<script>
+    function myFunction() {
+        
+    }
+</script>
 
-asp-action="RazorpayPayment"
+<a class="btn btn-success form-control" asp-action="RazorpayPayment">Pay With Razorpay</a>
+
+<a class="btn btn-success form-control" asp-action="GooglePayPayment">Pay With Google Pay</a>
+
+<a class="btn btn-success form-control" asp-action="PaytmPayment">Pay With Paytm</a>
+
 
 @section Scripts{
 
+    <script src="~/js/GooglePay.js"></script>
     <partial name="_ValidationScriptsPartial" />
 }

@@ -61,6 +61,10 @@ namespace BlogProject12.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("UserName")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -116,6 +120,111 @@ namespace BlogProject12.DataAccess.Migrations
                     b.ToTable("BlogModel");
                 });
 
+            modelBuilder.Entity("BlogProject12.Models.Login", b =>
+                {
+                    b.Property<int>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId");
+
+                    b.ToTable("Login");
+                });
+
+            modelBuilder.Entity("BlogProject12.Models.PaymentInitiateModel", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("amount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("contactNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("PaymentInitiateModels");
+                });
+
+            modelBuilder.Entity("BlogProject12.Models.Payments1", b =>
+                {
+                    b.Property<int>("PaymentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<int>("Ammount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("OrderId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TransactionId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PaymentId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Payments1");
+                });
+
+            modelBuilder.Entity("BlogProject12.Models.Persons", b =>
+                {
+                    b.Property<int>("PersonID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("City")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("stLastName");
+
+                    b.Property<string>("XYZ")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("PersonID");
+
+                    b.ToTable("tblPersons");
+                });
+
             modelBuilder.Entity("BlogProject12.Models.TagModel", b =>
                 {
                     b.Property<int>("Id")
@@ -147,6 +256,28 @@ namespace BlogProject12.DataAccess.Migrations
                         .IsRequired();
 
                     b.Navigation("Tag");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("BlogProject12.Models.PaymentInitiateModel", b =>
+                {
+                    b.HasOne("BlogProject.Models.UserModel", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("BlogProject12.Models.Payments1", b =>
+                {
+                    b.HasOne("BlogProject.Models.UserModel", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("User");
                 });

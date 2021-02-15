@@ -39,7 +39,7 @@
                 </div>
             </div>
 
-           
+
 
         </div>
 
@@ -48,9 +48,122 @@
     </div>
     <div class="row p-3 border">
         Not Registered ?? <a asp-area="User" asp-controller="User" asp-action="UserSignUp"> Sign Up </a>  Here !!!
-        </div>
+
+        <a asp-area="User" asp-controller="User" asp-action="FacebookLogin"> Login With Facebook </a>
+
+        @*///////////////////////////////////////////////Facebook Login////////////////////////////////////////////////////////////////////*@
+
+        <!--<script>
+
+        function statusChangeCallback(response) {  // Called with the results from FB.getLoginStatus().
+            console.log('statusChangeCallback');
+            console.log(response);                   // The current login status of the person.
+            if (response.status === 'connected') {   // Logged into your webpage and Facebook.
+                testAPI();
+            } else {                                 // Not logged into your webpage or we are unable to tell.
+                document.getElementById('status').innerHTML = 'Please log ' +
+                    'into this webpage.';
+            }
+        }
+
+
+        function checkLoginState() {               // Called when a person is finished with the Login Button.
+            FB.getLoginStatus(function (response) {   // See the onlogin handler
+                statusChangeCallback(response);
+            });
+        }
+
+
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '239544987891039',
+                cookie: true,                     // Enable cookies to allow the server to access the session.
+                xfbml: true,                     // Parse social plugins on this webpage.
+                version: '9.0'           // Use this Graph API version for this call.
+            });
+
+
+            FB.getLoginStatus(function (response) {   // Called after the JS SDK has been initialized.
+                statusChangeCallback(response);        // Returns the login status.
+            });
+        };
+
+        function testAPI() {                      // Testing Graph API after login.  See statusChangeCallback() for when this call is made.
+            console.log('Welcome!  Fetching your information.... ');
+            FB.api('/me', function (response) {
+                console.log('Successful login for: ' + response.name);
+                document.getElementById('status').innerHTML =
+                    'Thanks for logging in, ' + response.name + '!' ;
+            });
+        }
+
+    </script>-->
+        <!-- The JS SDK Login Button -->
+        <!--<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+    </fb:login-button>
+
+    <div id="status">
+    </div>
+
+
+    <div class="fb-login-button" data-width="" data-size="large" data-button-type="continue_with" data-layout="default" data-auto-logout-link="false" data-use-continue-as="false"></div>
+
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v9.0&appId=239544987891039&autoLogAppEvents=1" nonce="oLxK4KJX"></script>-->
+        @*///////////////////////////////////////////////////////////////////////Facebook Login End////////////////////////////////////////////////////*@
+    </div>
 </form>
+
+
+
 
 @section Scripts{
     <partial name="_ValidationScriptsPartial" />
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*
+    <script>
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '{your-app-id}',
+                cookie: true,
+                xfbml: true,
+                version: '{api-version}'
+            });
+
+            FB.AppEvents.logPageView();
+
+        };
+
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) { return; }
+            js = d.createElement(s); js.id = id;
+            js.src = "https://connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>*@

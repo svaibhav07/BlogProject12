@@ -18,6 +18,11 @@ namespace BlogProject12.DataAccess.Data
             public DbSet<UserModel> UserModel { get; set; }
             public DbSet<BlogModel> BlogModel { get; set; }
             public DbSet<TagModel> TagModel { get; set; }
+            public DbSet<PaymentInitiateModel> PaymentInitiateModels { get; set; }
+            //public DbSet<Payments> Payments { get; set; }
+            public DbSet<Payments1> Payments1 { get; set; }
+             public DbSet<Login> Login { get; set; }
+        public DbSet<Persons> Persons { get; set; }
     }
 
 

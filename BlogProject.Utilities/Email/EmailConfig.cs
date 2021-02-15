@@ -69,7 +69,7 @@ System.Web.HttpContext
 
                     str = str.Replace("{name}", "vaibhav");
 
-                    return str;
+                   
                   
                 break;
 
@@ -81,7 +81,7 @@ System.Web.HttpContext
 
                     str = str.Replace("{name}", "vaibhav");
 
-                    return str;
+                    
                 break;
 
                 case "feepayment":
@@ -92,7 +92,7 @@ System.Web.HttpContext
 
                     str = str.Replace("{name}", "vaibhav");
 
-                    return str;
+                    
                     break;
 
                 case "feereminder":
@@ -103,7 +103,7 @@ System.Web.HttpContext
 
                     str = str.Replace("{name}", "vaibhav");
 
-                    return str;
+                    
                     break;
 
                 case "assignment":
@@ -114,7 +114,7 @@ System.Web.HttpContext
 
                     str = str.Replace("{name}", "vaibhav");
 
-                    return str;
+                   
                     break;
 
 

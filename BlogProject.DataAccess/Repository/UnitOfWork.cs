@@ -17,7 +17,10 @@ namespace BlogProject12.DataAccess.Repository
             User = new UserRepository(_db);
             Tag = new TagRepository(_db);
             Blog = new BlogRepository(_db);
+            Payment = new PaymentRepository(_db);
+            Payments = new PaymentsRepository(_db);
             SP_Call = new SP_Call(_db);
+           
         }
         public IUserRepository User
         { get; private set; }
@@ -26,6 +29,12 @@ namespace BlogProject12.DataAccess.Repository
         { get; private set; }
 
         public IBlogRepository Blog
+        { get; private set; }
+
+        public IPaymentRepository Payment
+        { get; private set; }
+
+        public IPaymentsRepository Payments
         { get; private set; }
 
         public ISP_Call SP_Call 

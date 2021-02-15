@@ -80,7 +80,7 @@ namespace BlogProject12.Areas.Blog.Controllers
             //_unitOfWork.Save();
            // _unitOfWork.User.Add(user);
             _unitOfWork.Blog.Add(blog);           
-            _unitOfWork.Save();
+            
             _unitOfWork.Blog.Update(blog);
             _unitOfWork.Save();
            return RedirectToAction(nameof(Index));

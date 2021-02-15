@@ -17,7 +17,7 @@
     <link href="~/css/style.css" rel="stylesheet" />
 </head>
 <body>
-
+    
     <div class="container login-container">
         <h1>Creat an Order | Razorpay Payment Gateway Integration</h1>
         <div class="login-card">
@@ -26,10 +26,11 @@
                 {
                     @Html.AntiForgeryToken()
 
-                    <div class="row">
-                        <label for="name">Customer Name</label>
-                        @Html.TextBoxFor(x => x.name, new { @class = "form-control" })
-                    </div>
+                <div class="row">
+                    <label for="name">Customer Name</label>
+                    @Html.TextBoxFor(x => x.name, new { @class = "form-control" })
+                    @Html.DisplayName("Vaibhav")
+                </div>
                     <div class="row">
                         <label for="email">Email ID</label>
                         @Html.TextBoxFor(x => x.email, new { @class = "form-control" })
@@ -42,11 +43,14 @@
                         <label for="address">Address</label>
                         @Html.TextBoxFor(x => x.address, new { @class = "form-control" })
                     </div>
+
                     <div class="row">
                         <label for="amount">Amount (INR)</label>
                         @Html.TextBoxFor(x => x.amount, new { @class = "form-control" })
                     </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>}
+                    <button type="submit" class="btn btn-primary">Submit</button>
+
+                }
             </div>
         </div>
     </div>
