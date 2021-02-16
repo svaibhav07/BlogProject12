@@ -8,6 +8,9 @@
   <ItemGroup>
    
    
+    <PackageReference Include="ClosedXML" Version="0.95.4" />
+   
+   
     <PackageReference Include="iTextSharp" Version="5.5.13.2" />
    
    
@@ -43,6 +46,10 @@
     <Reference Include="PaytmChecksum">
       <HintPath>bin\Debug\net5.0\PaytmChecksum.dll</HintPath>
     </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\ExcelFiles\" />
   </ItemGroup>
 
 </Project>
