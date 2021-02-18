@@ -41,7 +41,7 @@ namespace BlogProject12
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
             services.Configure<CashFreeKeys>(Configuration.GetSection("CashFree"));
-
+            
             services.AddAuthentication(options =>
             {
                 options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;

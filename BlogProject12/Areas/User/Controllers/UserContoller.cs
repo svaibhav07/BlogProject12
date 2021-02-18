@@ -18,7 +18,7 @@ using Newtonsoft.Json.Linq;
 namespace BlogProject12.Areas.User.Controllers
 {
     [Area("User")]
-    [Authorize]
+   // [Authorize]
     public class UserController : Controller
     {
 
