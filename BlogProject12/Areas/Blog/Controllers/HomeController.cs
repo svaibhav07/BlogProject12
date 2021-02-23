@@ -11,6 +11,11 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
+using System.Text;
+using RtfPipe;
 
 namespace BlogProject12.Areas.Blog.Controllers
 {
@@ -21,11 +26,13 @@ namespace BlogProject12.Areas.Blog.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IUnitOfWork _unitOfWork;
+        public IWebHostEnvironment _host;
 
-        public HomeController(ILogger<HomeController> logger, IUnitOfWork unitOfWork)
+        public HomeController(ILogger<HomeController> logger, IUnitOfWork unitOfWork,IWebHostEnvironment host)
         {
             _logger = logger;
             _unitOfWork = unitOfWork;
+            _host = host;
         }
         
 
@@ -47,7 +54,7 @@ namespace BlogProject12.Areas.Blog.Controllers
 
 
        
-        public IActionResult Create()
+        public IActionResult CreateWrite()
         {
             BlogModel blog = new BlogModel();
             IEnumerable<TagModel> tagList = _unitOfWork.Tag.GetAll();
@@ -58,7 +65,7 @@ namespace BlogProject12.Areas.Blog.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         //[Authorize(Roles = "User")]
-        public IActionResult Create(string Blog_Title, string Blog_Content, string Blog_Tag)
+        public IActionResult CreateWrite(string Blog_Title, string Blog_Content, string Blog_Tag)
         {
 
 
@@ -87,7 +94,87 @@ namespace BlogProject12.Areas.Blog.Controllers
         }
 
 
-       // [Authorize(Roles = "User")]
+        public IActionResult CreateUpload()
+        {
+            BlogModel blog = new BlogModel();
+            IEnumerable<TagModel> tagList = _unitOfWork.Tag.GetAll();
+
+            return View(Tuple.Create(blog, tagList));
+        }
+
+
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Upload(ICollection<IFormFile> files)
+        {
+            string str;
+            var result = new StringBuilder();
+            using (var reader = new StreamReader(files.First().OpenReadStream()))
+            {
+                str= reader.ReadToEnd();
+            }
+            var html = Rtf.ToHtml(str);
+            UserModel user = new UserModel();
+            user = _unitOfWork.User.GetFirstOrDefault(e => e.UserName == User.FindFirst("UserName").Value);
+            BlogModel blog = new BlogModel();
+            blog.BlogRaw = html;
+            blog.BlogTitle = files.First().FileName;
+            blog.User = user;
+            blog.hashcode= files.First().FileName.GetHashCode();
+            _unitOfWork.Blog.Add(blog);
+            _unitOfWork.Save();
+            //int hash = files.First().FileName.GetHashCode();
+            blog = _unitOfWork.Blog.GetFirstOrDefault(e => e.BlogTitle == files.First().FileName);
+            int id = blog.Id;
+            return Json(id.ToString());  
+        }
+
+        public IActionResult EditUploadedData(string id)
+        {
+           
+            int hash = id.GetHashCode();
+            BlogModel blog = new BlogModel();
+            blog = _unitOfWork.Blog.GetFirstOrDefault(e => e.hashcode == hash );
+            IEnumerable<TagModel> tagList = _unitOfWork.Tag.GetAll();
+            return View(Tuple.Create(blog, tagList));
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        //[Authorize(Roles = "User")]
+        public IActionResult EditUploadedData(string Blog_Title, string Blog_Content, string Blog_Tag)
+        {
+
+
+            BlogModel blog = new BlogModel();
+            TagModel tag = new TagModel();
+            UserModel user = new UserModel();
+            blog.BlogPostDate = DateTime.Now;
+            //string check = " ";
+            tag = _unitOfWork.Tag.GetFirstOrDefault(e => e.TagName == Blog_Tag);
+            user = _unitOfWork.User.GetFirstOrDefault(e => e.UserName == User.FindFirst("UserName").Value);
+            //int id=Convert.ToInt16(User.FindFirst("Id").Value);
+            //int tagid = Convert.ToInt16(TagId);
+            blog.TagId = tag.Id;
+            blog.UserId = user.Id;
+            blog.BlogTitle = Blog_Title;
+            blog.BlogRaw = Blog_Content;
+            blog.User = user;
+            // _unitOfWork.User.Add(user);
+            //_unitOfWork.Save();
+            // _unitOfWork.User.Add(user);
+            _unitOfWork.Blog.Add(blog);
+
+            _unitOfWork.Blog.Update(blog);
+            _unitOfWork.Save();
+            return RedirectToAction(nameof(Index));
+        }
+
+
+        // [Authorize(Roles = "User")]
         public IActionResult Detail(int? id)
         {
             BlogModel blogFromDb = new BlogModel();

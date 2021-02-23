@@ -18,7 +18,7 @@ namespace BlogProject12.Models
         public string BlogRaw { get; set; }
 
         [Required]
-        public int TagId { get; set; }
+        public int TagId { get; set; } = 1005;
 
         [ForeignKey("TagId")]
        virtual public TagModel Tag { get; set; }
@@ -44,6 +44,9 @@ namespace BlogProject12.Models
 
         [Required]
         public int ChangeRequested { get; set; } = 0;
+
+        
+        public int hashcode { get; set; } 
 
 
     }

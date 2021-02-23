@@ -1,6 +1,5 @@
-﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-
-@model IEnumerable<BlogProject12.Models.BlogModel>
+﻿@model IEnumerable<BlogProject12.Models.BlogModel>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @{
     ViewData["Title"] = "Home Page";
@@ -13,71 +12,31 @@
 </style>
 
 
+    <!-- Button trigger modal-->
+    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter">
+        <h3>Post Your Blog</h3>
+    </button>
 
-<header>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-        <div class="container-fluid">
-
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                <ul class="navbar-nav flex-grow-1">
-                    <li class="nav-item">
-
-                    </li>
-
-                    @if (User.FindFirst("IsAdmin").Value == "1")
-                    {
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="Admin" asp-controller="User" asp-action="Index">User List</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="Admin" asp-controller="Tag" asp-action="Index">Tag List</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="Admin" asp-controller="Blog" asp-action="Index">Blog List</a>
-                        </li>
-
-                    }
-                    else
-                    {
-                <li class="nav-item">
-
-                    <a class="nav-link text-dark" asp-area="Blog" asp-controller="Home" asp-action="Create">Post Your Blog </a>
-                    <a class="nav-link text-dark" asp-area="Payment" asp-controller="Payment" asp-action="Cashfree">Cash Free Payment </a>
-
-                </li>
-                    }
-
-                </ul>
-
-                @if (User.FindFirst("IsAdmin").Value == "1" || User.FindFirst("IsAdmin").Value == "0")
-                { 
-            <a class="nav-link text-dark text-right" asp-area="User" asp-controller="User" asp-action="Logout">Logout</a>
-                }
-                    @*  @if (true)
-            {
-                <a class="nav-link text-dark text-right" asp-area="User" asp-controller="User" asp-action="UserSignUp">SignUp</a>
-                <a class="nav-link text-dark text-right" asp-area="User" asp-controller="User" asp-action="UserLogin">Login</a>
-                <a class="nav-link text-dark text-right" asp-area="User" asp-controller="User" asp-action="AdminSignUp">AdminSignUp</a>
-
-            }
-            <a class="nav-link text-dark text-right" asp-area="User" asp-controller="User" asp-action="SuperUserSection">Admin Request List</a>
-            User-*@
-
-
-
-                </div>
+    <!-- Modal-->
+    <div class="modal hide" id="exampleModalCenter" data-backdrop="static" tabindex="1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true" >
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter">
+                    <a asp-area="Blog" asp-controller="Home" asp-action="CreateWrite"> <h2><i class="flaticon2-pen text-danger icon-4x"></i></h2><h5 class="text-white">Write Here!!</h5></a>
+                </button>
+                <button type="button" class="btn btn-primary " data-toggle="modal" data-target="#exampleModalCenter">
+                    <a asp-area="Blog" asp-controller="Home" asp-action="CreateUpload"><i class="flaticon2-arrow-up text-black-50 icon-4x"></i> <h5 class="text-white">Upload File!!</h5></a>
+</button>
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter">
+                    <i class="flaticon2-delete text-black-50 icon-4x"></i><h5 class="text-white">Cancel</h5>
+                </button>
+            </div>
         </div>
-    </nav>
-</header>
-
-
+    </div>
 
 
 <div class="row pb-3 backgroundWhite">
+
 
 
     @if (User.FindFirst("IsAdmin").Value == "0")
@@ -91,7 +50,32 @@
                 <div class="container">
                     <div class="row">
 
-                        <a class="btn btn-primary" asp-action="Detail" asp-route-id="@blog.Id"><h3>@blog.BlogTitle</h3></a>
+                        @* Metronic Content Card View*@
+                        <div class="card card-custom">
+                            <div class="card-header">
+                                <div class="card-title">
+                                    <span class="card-icon">
+                                        <i class="flaticon2-chat-1 text-primary"></i>
+                                    </span>
+                                    <h3 class="card-label green-turquoise">
+                                        @blog.BlogTitle
+                                        @* <small>@blog.Tag</small>*@
+                                    </h3>
+                                </div>
+                                <div class="card-toolbar">
+                                    <a class="btn btn-outline-secondary font-weight-bold">
+                                        <i class="flaticon-calendar"></i> @blog.BlogPostDate.Date.
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                @blog.BlogRaw.Substring(0, 1500)
+                            </div>
+                            <div class="card-footer d-flex justify-content-between">
+                                <a href="#" class="btn btn-light-primary font-weight-bold">User Name</a>
+                                <a asp-area="Blog" asp-controller="Home" asp-action="Detail" asp-route-id="@blog.Id" class="btn btn-sm btn-success font-weight-bold">Full Content Here!!</a>
+                            </div>
+                        </div>
 
                         <div class="container">
 
@@ -108,8 +92,8 @@
 
                 </div>
             }
-            }
         }
+    }
 
 
 </div>
@@ -120,34 +104,59 @@
 
     @if (User.FindFirst("IsAdmin").Value == "1")
     {
-       
-    <div><br> Blog Request List<hr><br></div>
+
+        <div><br> Blog Request List<hr><br></div>
 
         @foreach (var blog in Model)
         {
-            @if (blog.IsRequested == 1 && blog.IsApproved == 0 && blog.IsRejected == 0 && blog.ChangeRequested==0)
+            @if (blog.IsRequested == 1 && blog.IsApproved == 0 && blog.IsRejected == 0 && blog.ChangeRequested == 0)
             {
-            <div class="container">
-                <div class="row">
+                <div class="container">
+                    <div class="row">
 
-                    <a class="btn btn-primary" asp-action="Detail" asp-route-id="@blog.Id"><h3>@blog.BlogTitle</h3></a>
+                        @* Metronic Content Card View*@
+                        <div class="card card-custom">
+                            <div class="card-header">
+                                <div class="card-title">
+                                    <span class="card-icon">
+                                        <i class="flaticon2-chat-1 text-primary"></i>
+                                    </span>
+                                    <h3 class="card-label">
+                                        Card Footer
+                                        <small>sub title</small>
+                                    </h3>
+                                </div>
+                                <div class="card-toolbar">
+                                    <a href="#" class="btn btn-sm btn-success font-weight-bold">
+                                        <i class="flaticon2-cube"></i> Reports
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                ...
+                            </div>
+                            <div class="card-footer d-flex justify-content-between">
+                                <a href="#" class="btn btn-light-primary font-weight-bold">Manage</a>
+                                <a href="#" class="btn btn-outline-secondary font-weight-bold">Learn more</a>
+                            </div>
+                        </div>
 
-                    <div class="container">
+                        <div class="container">
 
-                        <div class="row">
+                            <div class="row">
 
-                            <br>
-                            <br>
+                                <br>
+                                <br>
+
+                            </div>
 
                         </div>
 
                     </div>
 
                 </div>
-
-            </div>
-                }
             }
+        }
 
     }
 

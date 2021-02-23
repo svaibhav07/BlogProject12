@@ -37,21 +37,37 @@ namespace BlogProject12.Areas.User.Controllers
         }
 
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult UserSignUp(UserModel user)
-        {
-            _unitOfWork.User.Add(user);
-            _unitOfWork.Save();
-
-            return RedirectToAction("Index", "Home", new { area = "Blog" });
-
-        }
 
         public IActionResult UserSignUp()
         {
             UserModel user = new UserModel();
             return View(user);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult UserSignUp(UserModel user)
+        {
+            _unitOfWork.User.Add(user);
+            _unitOfWork.Save(); //sign up User completed here 
+
+            //New User will Sign In  from here
+            UserModel users1 = _unitOfWork.User.GetFirstOrDefault(p => p.Email == user.Email);
+            var identity = new ClaimsIdentity(new[] {
+                    new Claim("Id",user.Id.ToString()),
+                    new Claim("UserName", user.UserName),
+                    new Claim("FirstName", user.FirstName),
+                    new Claim("LastName", user.LastName),
+                    new Claim("Email", user.Email),
+                    new Claim("IsAdmin",user.IsAdminApproved.ToString()),
+                    new Claim(ClaimTypes.Role, "User"),
+                }, CookieAuthenticationDefaults.AuthenticationScheme);
+            var principal = new ClaimsPrincipal(identity);
+            var login = HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+
+            return RedirectToAction("Index", "Home", new { area = "Blog" });
+
         }
 
         [HttpPost]

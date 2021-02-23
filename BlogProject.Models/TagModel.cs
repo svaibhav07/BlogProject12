@@ -12,7 +12,7 @@ namespace BlogProject12.Models
 
         [Display(Name = "Tag Name")]
         [Required]
-        public string TagName { get; set; }
+        public string TagName { get; set; } 
 
         
        // [Required]

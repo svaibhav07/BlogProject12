@@ -1,0 +1,75 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+    //var title = "Create Tag";
+}
+
+
+<div id="dropzone">
+    <form action="/Blog/Home/Upload" method="post" enctype="multipart/form-data"
+          id="myAwesomeDropzone" class="dropzone needsclick dz-clickable dropzone-previews">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="col-12 border-bottom">
+
+        </div>
+        @Html.AntiForgeryToken()
+        <div></div>
+        <div class="dz-message needsclick">
+            <button type="button" class="dz-button">Drop files here or click to upload.</button><br />
+        </div>
+        <span class="note needsclick">
+
+        </span>
+        </form>
+</div>
+
+
+@section Scripts{
+
+    <link rel="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/dropzone.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/dropzone.js"></script>
+    <script>
+        function myParamName() {
+            return "files";
+        }
+
+        Dropzone.options.myAwesomeDropzone = {
+            paramName: myParamName, // The name that will be used to transfer the file
+            maxFiles: 1,
+            maxFilesize: 100,
+            uploadMultiple: true,
+            accept: function (file, done) {
+                if (file.name === "justinbieber.jpg") {
+                    done("Naha, you don't.");
+                }
+                else { done(); }
+            },
+            init: function () {
+                this.on("sending", function (file, response, formData) {
+                    formData["__RequestAntiForgeryToken"] = document.getElementsByName("__RequestVerificationToken").value;
+                });
+                this.on("sendingmultiple", function (file, response, formData) {
+                    formData["__RequestAntiForgeryToken"] = document.getElementsByName("__RequestVerificationToken").value;
+                });
+                this.on("success", function (file, response) {
+                    file.serverID = response.id;
+                });
+                this.on("complete", function (file) {
+
+                    @*formData["file"] = file;*@
+                    
+                    @*window.location.href = "@Url.Action("EditUploadedData", "Home", new { id = 1 })";*@
+
+                    window.location.href = "/Blog/Home/EditUploadedData/" + file.name;
+                });
+                this.on("error", function (file, response) {
+                    var r = response;
+                    console.log("Drop Err:");
+                    console.log(r);
+                });
+            }
+        };
+    </script>
+}
+
+
