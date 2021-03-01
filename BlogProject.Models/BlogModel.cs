@@ -21,7 +21,7 @@ namespace BlogProject12.Models
         public int TagId { get; set; }
 
         [ForeignKey("TagId")]
-       virtual public TagModel Tag { get; set; }
+        public virtual TagModel Tag { get; set; }
 
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
@@ -31,7 +31,7 @@ namespace BlogProject12.Models
         public int UserId { get; set; }
 
         [ForeignKey("UserId")]
-        virtual public UserModel User { get; set; }
+        public virtual UserModel User { get; set; }
 
         [Required]
         public int IsRequested { get; set; } = 1;

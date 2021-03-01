@@ -22,25 +22,14 @@ namespace BlogProject12.Areas.Admin.Controllers
             _unitOfWork = unitOfWork;
         }
 
-
-
-   
-
-
-
         public IActionResult Index()
         {
 
             
             return View();
         }
-
-
-
-
-
-
-      
+    
+   
         public IActionResult Upsert(int? id)
         {
             TagModel tag = new TagModel();
@@ -83,22 +72,56 @@ namespace BlogProject12.Areas.Admin.Controllers
             return View(tag);
         }
 
+        public IActionResult Delete(int? id)
+        {
+            TagModel tag = new TagModel();
+            if (id == null)
+            {
+                //create
+                return View(tag);
+            }
 
+            tag = _unitOfWork.Tag.Get(id.GetValueOrDefault());
 
+            if (tag == null)
+            {
+                return NotFound();
+            }
 
+            return View(tag);
+        }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
 
+        public IActionResult Delete(TagModel tag)
+        {
+            var objFromDb = _unitOfWork.Tag.Get(tag.Id);
+            string deleteMSG;
+            if (objFromDb == null)
+            {
+                deleteMSG = "Error while deleting";
+            }
+            else
+            {
+                _unitOfWork.Tag.Remove(objFromDb);
+                _unitOfWork.Save();
+                deleteMSG= "Delete Successful";
+            }
+
+            return View(deleteMSG);
+        }
 
         #region API CALLS
-        [HttpGet]
+        [HttpPost]
         public IActionResult GetAll()
         {
             var allObj = _unitOfWork.Tag.GetAll();
             return Json(new { data = allObj });
         }
 
-        [HttpDelete]
-        public IActionResult Delete(int id)
+        [HttpGet]
+        public IActionResult DeleteAPI(int id)
         {
             var objFromDb = _unitOfWork.Tag.Get(id);
             if (objFromDb == null)
@@ -107,12 +130,10 @@ namespace BlogProject12.Areas.Admin.Controllers
             }
             _unitOfWork.Tag.Remove(objFromDb);
             _unitOfWork.Save();
-            return Json(new { success = true, message = "Delete Successful" });
-        
-        
+            return RedirectToAction(nameof(Index));
+
+
         }
-
-
 
         #endregion
     }

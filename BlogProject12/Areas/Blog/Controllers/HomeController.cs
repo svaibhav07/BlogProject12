@@ -39,7 +39,9 @@ namespace BlogProject12.Areas.Blog.Controllers
             //ViewBag.Message = "Admin";
 
             IEnumerable<BlogModel> blogList = _unitOfWork.Blog.GetAll();
-           
+           /* string username = blogList.First().User.UserName;
+            string tagname = blogList.First().Tag.TagName;*/
+
             return View(blogList);
 
 
@@ -72,6 +74,7 @@ namespace BlogProject12.Areas.Blog.Controllers
             //int id=Convert.ToInt16(User.FindFirst("Id").Value);
            //int tagid = Convert.ToInt16(TagId);
             blog.TagId = tag.Id;
+            blog.Tag = tag;
             blog.UserId = user.Id;
             blog.BlogTitle = Blog_Title;
             blog.BlogRaw = Blog_Content;
@@ -83,7 +86,8 @@ namespace BlogProject12.Areas.Blog.Controllers
             
             _unitOfWork.Blog.Update(blog);
             _unitOfWork.Save();
-           return RedirectToAction(nameof(Index));
+           
+            return RedirectToAction(nameof(Index));
         }
 
 

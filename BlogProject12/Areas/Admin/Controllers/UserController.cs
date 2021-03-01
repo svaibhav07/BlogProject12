@@ -107,7 +107,7 @@ namespace BlogProject12.Areas.Admin.Controllers
 
 
         #region API CALLS
-        [HttpGet]
+        [HttpPost]
         public IActionResult GetAll()
         {
             var allObj = _unitOfWork.User.GetAll();

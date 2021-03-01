@@ -14,108 +14,151 @@
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="col-12 border-bottom">
 
-        </div>
-        <div class="col-12 pt-4">
-            <div class="form-group row">
-                <div class="col-4">
-                    USER NAME
-                </div>
-                <div class="col-8">
-                    <input asp-for="UserName" class="form-control" />
-                    <span asp-validation-for="UserName" class="text-danger"></span>
-                </div>
-                <div class="col-4">
-                    PASSWORD
-                </div>
-                <div class="col-8">
-                    <input asp-for="Password" class="form-control" />
-                    <span asp-validation-for="Password" class="text-danger"></span>
+    <!--begin::Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700|Roboto:300,400,500,600,700">
+
+    <!--end::Fonts -->
+    <!--begin::Page Custom Styles(used by this page) -->
+    <link href="assets/css/pages/login/login-2.css" rel="stylesheet" type="text/css" />
+
+    <!--end::Page Custom Styles -->
+    <!--begin::Global Theme Styles(used by all pages) -->
+    <link href="assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+
+    <!--end::Global Theme Styles -->
+    <!--begin::Layout Skins(used by all pages) -->
+    <link href="assets/css/skins/header/base/light.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/skins/header/menu/light.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/skins/brand/dark.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/skins/aside/dark.css" rel="stylesheet" type="text/css" />
+
+    <!--end::Layout Skins -->
+    <link rel="shortcut icon" href="assets/media/logos/favicon.ico" />
+</head>
+
+<!-- end::Head -->
+<!-- begin::Body -->
+<body class="kt-quick-panel--right kt-demo-panel--right kt-offcanvas-panel--right kt-header--fixed kt-header-mobile--fixed kt-subheader--enabled kt-subheader--fixed kt-subheader--solid kt-aside--enabled kt-aside--fixed kt-page--loading">
+
+    <!-- begin:: Page -->
+    <div class="kt-grid kt-grid--ver kt-grid--root">
+        <div class="kt-grid kt-grid--hor kt-grid--root kt-login kt-login--v2 kt-login--signin" id="kt_login">
+            <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor" style="background-image: url(assets/media/bg/bg-1.jpg);">
+                <div class="kt-grid__item kt-grid__item--fluid kt-login__wrapper">
+                    <div class="kt-login__container">
+                        <div class="kt-login__logo">
+                            <a href="#">
+                                <img src="assets/media/logos/logo-mini-2-md.png">
+                            </a>
+                        </div>
+                        <div class="kt-login__signin">
+                            <div class="kt-login__head">
+                                <h3 class="kt-login__title">Sign In</h3>
+                            </div>
+                            <form method="post" class="kt-form" asp-action="UserLogin">
+                                <div class="input-group">
+                                    <input asp-for="UserName" class="form-control" />
+                                    <span asp-validation-for="UserName" class="text-danger"></span>
+                                    @* <input class="form-control" type="text" placeholder="Email" name="email" autocomplete="off">*@
+                                </div>
+                                <div class="input-group">
+                                    <input asp-for="Password" class="form-control" />
+                                    <span asp-validation-for="Password" class="text-danger"></span>
+                                    @*<input class="form-control" type="password" placeholder="Password" name="password">*@
+                                </div>
+                               @* <div class="row kt-login__extra">
+                                    <div class="col">
+                                        <label class="kt-checkbox">
+                                            <input type="checkbox" name="remember"> Remember me
+                                            <span></span>
+                                        </label>
+                                    </div>
+                                    <div class="col kt-align-right">
+                                        <a href="javascript:;" id="kt_login_forgot" class="kt-link kt-login__link">Forget Password ?</a>
+                                    </div>
+                                </div>*@
+                                <div class="kt-login__actions">
+                                    @*<button type="submit" class="btn btn-primary form-control">Login</button>*@
+                                    <button @*id="kt_login_signin_submit"*@ type="submit" class="btn btn-pill kt-login__btn-primary">Sign In</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="kt-login__signup">
+                            <div class="kt-login__head">
+                                <h3 class="kt-login__title">Sign Up</h3>
+                                <div class="kt-login__desc">Enter your details to create your account:</div>
+                            </div>
+                            <form method="post" class="kt-form" asp-action="UserSignUp">
+                                <div class="input-group">
+                                    <input placeholder="User Name" asp-for="UserName" class="form-control" />
+                                    <span asp-validation-for="UserName" class="text-danger"></span>
+                                </div>
+                                <div class="input-group">
+                                    <input placeholder="First Name" asp-for="FirstName" class="form-control" />
+                                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                                </div>
+                                <div class="input-group">
+                                    <input placeholder="Last Name" asp-for="LastName" class="form-control" />
+                                    <span asp-validation-for="LastName" class="text-danger"></span>
+                                </div>
+                                <div class="input-group">
+                                    <input placeholder="Email" asp-for="Email" class="form-control" />
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                </div>
+                                <div class="input-group">
+                                    <input placeholder="Phone" asp-for="Phone" class="form-control" />
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                </div>
+                                <div class="input-group">
+                                    <input placeholder="Password" asp-for="Password" class="form-control" />
+                                    <span asp-validation-for="Password" class="text-danger"></span>
+                                </div>
+                                <div class="input-group">
+                                    <input placeholder="Password Confirm" asp-for="PasswordConfirm" class="form-control" />
+                                    <span asp-validation-for="PasswordConfirm" class="text-danger"></span>
+                                </div>
+                                <div class="row kt-login__extra">
+                                    <div class="col kt-align-left">
+                                        <label class="kt-checkbox">
+                                            <input type="checkbox" name="agree">I Agree the <a href="#" class="kt-link kt-login__link kt-font-bold">terms and conditions</a>.
+                                            <span></span>
+                                        </label>
+                                        <span class="form-text text-muted"></span>
+                                    </div>
+                                </div>
+                                <div class="kt-login__actions">
+                                    <button type="submit" class="btn btn-pill kt-login__btn-primary">Sign Up</button>&nbsp;&nbsp;
+                                    <button id="kt_login_signup_cancel" class="btn btn-pill kt-login__btn-secondary">Cancel</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="kt-login__forgot">
+                            <div class="kt-login__head">
+                                <h3 class="kt-login__title">Forgotten Password ?</h3>
+                                <div class="kt-login__desc">Enter your email to reset your password:</div>
+                            </div>
+                            <form class="kt-form" action="">
+                                <div class="input-group">
+                                    <input class="form-control" type="text" placeholder="Email" name="email" id="kt_email" autocomplete="off">
+                                </div>
+                                <div class="kt-login__actions">
+                                    <button id="kt_login_forgot_submit" class="btn btn-pill kt-login__btn-primary">Request</button>&nbsp;&nbsp;
+                                    <button id="kt_login_forgot_cancel" class="btn btn-pill kt-login__btn-secondary">Cancel</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="kt-login__account">
+                            <span class="kt-login__account-msg">
+                                Don't have an account yet ?
+                            </span>&nbsp;&nbsp;
+                            <a href="javascript:;" id="kt_login_signup" class="kt-link kt-link--light kt-login__account-link">Sign Up</a>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="form-group row">
-                <div class="col-8 offset-4">
-
-                    <button type="submit" class="btn btn-primary form-control">Login</button>
-                </div>
-            </div>
-
-
-
         </div>
-
-
-
     </div>
-    <div class="row p-3 border">
-        Not Registered ?? <a asp-area="User" asp-controller="User" asp-action="UserSignUp"> Sign Up </a>  Here !!!
-
-        <a asp-area="User" asp-controller="User" asp-action="FacebookLogin"> Login With Facebook </a>
-
-        @*///////////////////////////////////////////////Facebook Login////////////////////////////////////////////////////////////////////*@
-
-        <!--<script>
-
-        function statusChangeCallback(response) {  // Called with the results from FB.getLoginStatus().
-            console.log('statusChangeCallback');
-            console.log(response);                   // The current login status of the person.
-            if (response.status === 'connected') {   // Logged into your webpage and Facebook.
-                testAPI();
-            } else {                                 // Not logged into your webpage or we are unable to tell.
-                document.getElementById('status').innerHTML = 'Please log ' +
-                    'into this webpage.';
-            }
-        }
-
-
-        function checkLoginState() {               // Called when a person is finished with the Login Button.
-            FB.getLoginStatus(function (response) {   // See the onlogin handler
-                statusChangeCallback(response);
-            });
-        }
-
-
-        window.fbAsyncInit = function () {
-            FB.init({
-                appId: '239544987891039',
-                cookie: true,                     // Enable cookies to allow the server to access the session.
-                xfbml: true,                     // Parse social plugins on this webpage.
-                version: '9.0'           // Use this Graph API version for this call.
-            });
-
-
-            FB.getLoginStatus(function (response) {   // Called after the JS SDK has been initialized.
-                statusChangeCallback(response);        // Returns the login status.
-            });
-        };
-
-        function testAPI() {                      // Testing Graph API after login.  See statusChangeCallback() for when this call is made.
-            console.log('Welcome!  Fetching your information.... ');
-            FB.api('/me', function (response) {
-                console.log('Successful login for: ' + response.name);
-                document.getElementById('status').innerHTML =
-                    'Thanks for logging in, ' + response.name + '!' ;
-            });
-        }
-
-    </script>-->
-        <!-- The JS SDK Login Button -->
-        <!--<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
-    </fb:login-button>
-
-    <div id="status">
-    </div>
-
-
-    <div class="fb-login-button" data-width="" data-size="large" data-button-type="continue_with" data-layout="default" data-auto-logout-link="false" data-use-continue-as="false"></div>
-
-    <div id="fb-root"></div>
-    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v9.0&appId=239544987891039&autoLogAppEvents=1" nonce="oLxK4KJX"></script>-->
-        @*///////////////////////////////////////////////////////////////////////Facebook Login End////////////////////////////////////////////////////*@
-    </div>
-</form>
-
-
-
 
 @section Scripts{
     <partial name="_ValidationScriptsPartial" />
